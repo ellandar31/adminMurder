@@ -1,0 +1,54 @@
+{
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "murderparty-83b6c",
+          "configurations": {
+            "android": "1:312983175067:android:0ddf45bba660762c9c2b3e",
+            "web": "1:312983175067:web:63eb8b5a3d2774649c2b3e",
+            "windows": "1:312983175067:web:e2083a512b39c4969c2b3e"
+          }
+        }
+      },
+      "android": {
+        "default": {
+          "projectId": "murderparty-83b6c",
+          "appId": "1:312983175067:android:0ddf45bba660762c9c2b3e",
+          "fileOutput": "android/app/google-services.json"
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "site" : "admin-lba-murder",
+    "public": "build\\web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "emulators": {
+    "firestore": {
+      "port": 8080
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
+  }
+}

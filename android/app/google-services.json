@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "312983175067",
+    "project_id": "murderparty-83b6c",
+    "storage_bucket": "murderparty-83b6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312983175067:android:0ddf45bba660762c9c2b3e",
+        "android_client_info": {
+          "package_name": "com.example.admin_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312983175067-13o4bs9uq05hc68885u89bdop6oct6ck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOQ3Y907HBxu6Awxq6OlwGoqmk-BsQq8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312983175067-13o4bs9uq05hc68885u89bdop6oct6ck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
