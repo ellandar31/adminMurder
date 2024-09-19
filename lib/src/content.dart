@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'menus/menuItem.dart';
+import '../menus/menuItem.dart';
 import 'store/appstate.dart';
 import 'widget/grid_list.dart';
-import 'menus/menuapp.dart';
+import '../menus/menuapp.dart';
 
 
-class MyHomePage extends StatefulWidget {
+class MyContent extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyContent> createState() => _MyContentState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyContentState extends State<MyContent> {
   var selectedIndex = 0;
 
   @override

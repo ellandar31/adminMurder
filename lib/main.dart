@@ -1,13 +1,10 @@
-
-import 'package:admin_app/controller/LogController.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'firebase_options.dart';
-import 'myhomepage.dart';
-import 'store/appstate.dart';
+import 'firebase/firebase_options.dart';
+import 'guard/auth_gate.dart';
+import 'src/store/appstate.dart';
 
 Future<void> main() async  {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,20 +27,8 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 94, 97, 240)),
         ),
-        home: MyHomePage(),//_handleAuth(),
+        home: AuthGate(),
       ),
     );
   }
 }
-
-Widget _handleAuth(){
-  return StreamBuilder<User?>(stream: FirebaseAuth.instance.authStateChanges(), 
-                            builder: ( BuildContext context, snapshot){
-                              if (snapshot.hasData){
-                                return MyHomePage();
-                              }else{
-                                return LogController();
-                              }
-                            });
-}
-
