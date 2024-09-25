@@ -23,6 +23,7 @@ class AuthGate extends StatelessWidget {
               EmailAuthProvider(),
               GoogleProvider(clientId: clientId),
             ],
+            /*
             headerBuilder: (context, constraints, shrinkOffset) {
               return Padding(
                 padding: const EdgeInsets.all(1),
@@ -31,7 +32,7 @@ class AuthGate extends StatelessWidget {
                   child: Image.asset('default/flutterfire_300x.png'),
                 ),
               );
-            },
+            },*/
             subtitleBuilder: (context, action) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -54,7 +55,7 @@ class AuthGate extends StatelessWidget {
                 padding: const EdgeInsets.all(2),
                 child: AspectRatio(
                   aspectRatio: 10,
-                  child: Image.asset('default/flutterfire_300x.png'),
+                  //child: Image.asset('default/flutterfire_300x.png'),
                 ),
               );
             },

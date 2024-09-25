@@ -73,5 +73,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'murderparty-83b6c.appspot.com',
     measurementId: 'G-762MRW2PYV',
   );
-
 }
