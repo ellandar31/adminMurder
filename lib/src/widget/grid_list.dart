@@ -3,28 +3,22 @@ import 'package:provider/provider.dart';
 
 import '../store/appstate.dart';
 
-class GridListPage extends StatefulWidget {
-
-  const GridListPage({
-    super.key, 
+class GridListPage extends StatelessWidget {
+  GridListPage({
+    super.key,
+    required this.isGridView, // Paramètre ajouté dans le constructeur
   });
 
-  @override
-  _GridListPageState createState() => _GridListPageState();
-}
+  final bool isGridView; // Attribut rendu accessible depuis l'extérieur
 
-class _GridListPageState extends State<GridListPage> {
-  bool _isGridView = true;
-  
-  final colorActive =  Color.fromARGB(255, 11, 151, 13);
+  final colorActive = Color.fromARGB(255, 11, 151, 13);
   final colorInactive = Color.fromARGB(255, 91, 87, 87);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Colors.blue,
-      appBar: AppBar( //Header de la page permettant d'afficher une grille ou une liste 
+      /*appBar: AppBar( //Header de la page permettant d'afficher une grille ou une liste 
         actions: [
           IconButton(
             icon: Icon(_isGridView ? Icons.list : Icons.grid_view),
@@ -35,8 +29,8 @@ class _GridListPageState extends State<GridListPage> {
             },
           )
         ],
-      ),
-      body: _isGridView ? _buildGridView(context) : _buildListView(context),
+      ),*/
+      body: isGridView ? _buildGridView(context) : _buildListView(context),
     );
   }
 
@@ -54,22 +48,28 @@ class _GridListPageState extends State<GridListPage> {
       itemBuilder: (context, index) {
         final itemCur = itemList[index];
         return SizedBox(
-          width: 100,  // Largeur fixe pour chaque carte
-          height: 80,  // Hauteur fixe pour chaque carte
+          width: 100, // Largeur fixe pour chaque carte
+          height: 80, // Hauteur fixe pour chaque carte
           child: InkWell(
-          onTap: () {
-            context.read<MyAppState>().activeInactiveUser(index, !itemCur.isActive);
-          },
-          child: Card(
+            onTap: () {
+              context
+                  .read<MyAppState>()
+                  .activeInactiveUser(index, !itemCur.isActive);
+            },
+            child: Card(
               color: itemCur.isActive ? colorActive : colorInactive,
               elevation: 4.0,
               child: Center(
-                child: 
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Centre verticalement
-                crossAxisAlignment: CrossAxisAlignment.center, // Centre horizontalement
+                child: Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center, // Centre verticalement
+                  crossAxisAlignment:
+                      CrossAxisAlignment.center, // Centre horizontalement
                   children: [
-                    Icon(Icons.person_outline,size: 50.0,),
+                    Icon(
+                      Icons.person_outline,
+                      size: 50.0,
+                    ),
                     Text(
                       itemCur.toString(),
                       textAlign: TextAlign.center,
@@ -93,12 +93,14 @@ class _GridListPageState extends State<GridListPage> {
       itemBuilder: (context, index) {
         final itemCur = itemList[index];
         return ListTile(
-          tileColor : itemCur.isActive ? colorActive : colorInactive,
+          tileColor: itemCur.isActive ? colorActive : colorInactive,
           title: Text(itemCur.toString()),
           trailing: Checkbox(
             value: itemCur.isActive,
             onChanged: (bool? value) {
-              context.read<MyAppState>().activeInactiveUser(index, value ?? true);
+              context
+                  .read<MyAppState>()
+                  .activeInactiveUser(index, value ?? true);
             },
           ),
         );

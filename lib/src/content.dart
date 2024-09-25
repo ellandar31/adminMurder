@@ -1,3 +1,4 @@
+import 'package:admin_app/guard/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import '../menus/menuItem.dart';
 import 'store/appstate.dart';
 import 'widget/grid_list.dart';
 import '../menus/menuapp.dart';
-
 
 class MyContent extends StatefulWidget {
   @override
@@ -18,12 +18,12 @@ class _MyContentState extends State<MyContent> {
 
   @override
   Widget build(BuildContext context) {
-    
+    /*
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         print(user.uid);
       }
-    });
+    });*/
 
     return Scaffold(
       body: Container(
@@ -37,7 +37,9 @@ class _MyContentState extends State<MyContent> {
 
             if (snapshot.hasError) {
               // Update MyAppState with the error message
-              context.read<MyAppState>().errorMessage(snapshot.error.toString());
+              context
+                  .read<MyAppState>()
+                  .errorMessage(snapshot.error.toString());
               return Center(child: Text('Erreur: ${snapshot.error}'));
             }
 
@@ -51,10 +53,13 @@ class _MyContentState extends State<MyContent> {
             Widget page;
             switch (selectedIndex) {
               case 0:
-                page = GridListPage();
+                page = GridListPage(isGridView: true);
                 break;
               case 1:
-                page = GridListPage();
+                page = GridListPage(isGridView: false);
+                break;
+              case 2:
+                page = ProfilePage();
                 break;
               default:
                 throw UnimplementedError('no widget for $selectedIndex');
@@ -71,8 +76,9 @@ class _MyContentState extends State<MyContent> {
   CustomNavigationRail menuFunc(bool bottomNavBarBool) {
     return CustomNavigationRail(
       itemList: [
-        MenuItem(icone: Icon(Icons.grid_3x3), label: 'Grille/Liste'),
-        MenuItem(icone: Icon(Icons.grid_3x3), label: 'Grille/Liste'),
+        MenuItem(icone: Icon(Icons.grid_3x3), label: 'Grille'),
+        MenuItem(icone: Icon(Icons.playlist_add_check), label: 'Liste'),
+        MenuItem(icone: Icon(Icons.person), label: 'Profil'),
       ],
       bottomNavBar: bottomNavBarBool,
       selectedIndex: selectedIndex,
