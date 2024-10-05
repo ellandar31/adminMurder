@@ -21,10 +21,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      appBar: null /*AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text('Mon Profil'),
-      )*/,
+      appBar: headerBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -84,6 +81,17 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  AppBar? headerBar() {
+    if(header){
+      return AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text('Mon Profil'),
+      );
+    }else{
+      return null;
+    }
   }
 }
 
