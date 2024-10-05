@@ -2,25 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 
 class ProfilePage extends StatelessWidget {
-  late String name;
-  late String email;
-  late String profileImageUrl;
+  late final String name;
+  late final String email;
+  late final String profileImageUrl;
+  late final bool header;
 
-  ProfilePage({
-    super.key,
+  ProfilePage(bool headerArg, {
+    super.key,    
   }) {
     var user = FirebaseAuth.instance.currentUser;
     name = user!.displayName ?? '';
     email = user!.email ?? '';
     profileImageUrl = '';
+    header = headerArg; 
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor: Colors.blue,
+      appBar: null /*AppBar(
+        backgroundColor: Colors.blue,
         title: const Text('Mon Profil'),
-      ),
+      )*/,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -47,7 +51,7 @@ class ProfilePage extends StatelessWidget {
               email,
               style: const TextStyle(
                 fontSize: 16,
-                color: Colors.grey,
+                //color: Colors.grey,
               ),
             ),
             const SizedBox(height: 20),

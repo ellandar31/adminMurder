@@ -59,7 +59,7 @@ class _MyContentState extends State<MyContent> {
                 page = GridListPage(isGridView: false);
                 break;
               case 2:
-                page = ProfilePage();
+                page = ProfilePage(false);
                 break;
               default:
                 throw UnimplementedError('no widget for $selectedIndex');
