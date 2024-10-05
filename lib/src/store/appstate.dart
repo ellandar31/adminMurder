@@ -30,31 +30,6 @@ class MyAppState extends ChangeNotifier{
   }
 
 //----------------------------------------------
-//     WordPair
-//----------------------------------------------
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-//----------------------------------------------
-//     Favorites
-//----------------------------------------------
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
-
-//----------------------------------------------
 //     Users
 //----------------------------------------------
 

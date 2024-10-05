@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
-import 'package:flutter/foundation.dart';
 
 import 'firebase_options.dart';
 import 'decorations.dart';
@@ -80,25 +78,7 @@ class MyApp extends StatelessWidget {
                 headerBuilder: headerIcon(Icons.lock),
                 sideBuilder: sideIcon(Icons.lock),
               );
-            },
-            '/profile': (context) {
-              final platform = Theme.of(context).platform;
-
-              return ProfileScreen(
-                actions: [
-                  SignedOutAction((context) {
-                    Navigator.pushReplacementNamed(context, '/');
-                  }),
-                  mfaAction,
-                ],
-                actionCodeSettings: actionCodeSettings,
-                showMFATile: kIsWeb ||
-                    platform == TargetPlatform.iOS ||
-                    platform == TargetPlatform.android,
-                showUnlinkConfirmationDialog: true,
-                showDeleteConfirmationDialog: true,
-              );
-            },
+            },           
             '/home': (context) {
               return HomeScreen();
             },
