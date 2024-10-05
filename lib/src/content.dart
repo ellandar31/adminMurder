@@ -18,12 +18,6 @@ class _MyContentState extends State<MyContent> {
 
   @override
   Widget build(BuildContext context) {
-    /*
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        print(user.uid);
-      }
-    });*/
 
     return Scaffold(
       body: Container(
