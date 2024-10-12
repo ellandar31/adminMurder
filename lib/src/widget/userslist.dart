@@ -31,8 +31,8 @@ class UsersList extends StatelessWidget {
             itemBuilder: (context, index) {
               var user = users[index];
               return ListTile(
-                title: Text(user['name']), // Assure-toi que la clé 'name' existe dans tes documents
-                subtitle: Text(user['email']), // Assure-toi que la clé 'email' existe dans tes documents
+                title: Text(user['name']), 
+                subtitle: Text(user['email']  & " / " & user['role']), 
               );
             },
           );

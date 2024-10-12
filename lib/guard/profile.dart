@@ -98,8 +98,7 @@ class ProfilePage extends StatelessWidget {
 void signOutMethod(BuildContext context) {
   try {
     Navigator.pushReplacementNamed(context, '/');
-    //FirebaseAuth.instance.signOut();
-    //Navigator.of(context).pop();
+    FirebaseAuth.instance.signOut();    
   } catch (e) {
     debugPrint('Erreur lors de la déconnexion: $e');
   }

@@ -1,12 +1,16 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
+class UserFireStore {
    String uid;
    String email;
    String role;
    bool isActive;
 
-  User({
+  static const String admin = "Admin";
+  static const String player = "player";
+
+  UserFireStore({
     required this.uid,
     required this.email,
     required this.role,
@@ -32,9 +36,9 @@ class User {
   }
 
   // Méthode pour créer un User à partir d'un DocumentSnapshot de Firestore
-  factory User.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+  factory UserFireStore.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     Map<String, dynamic>? data = doc.data();
-    return User(
+    return UserFireStore(
       uid : doc.id,
       email: data?['email'] ?? '',
       role: data?['role'] ?? 'user',
@@ -45,23 +49,32 @@ class User {
 //----------------------------------------------
 //     Interaction avec la base de données
 //----------------------------------------------
+  static Future<List<UserFireStore>> getUserList() async {
+    final docUsers = FirebaseFirestore.instance.collection('users');
+    final snapshot = await docUsers.get();
+    var userList = <UserFireStore>[];
+    for (var current in snapshot.docs) {
+      userList.add(UserFireStore.fromFirestore(current));
+    }
+    return userList;
+  }
 
-  Future<void> createUser(User user) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc(user.email);
+  static Future<void> createUser(UserFireStore user) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(user.uid);
     
     // Convertir l'objet User en Map et l'ajouter à Firestore
     await docUser.set(user.toMap());
   }
 
-  Future<User?> getUser(String email) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc(email);
-    final snapshot = await docUser.get();
+  static Future<UserFireStore?> getUser(String email) async {
+    final docUsers = FirebaseFirestore.instance.collection('users');
+    final snapshot = await docUsers.get();
 
-    if (snapshot.exists) {
-      return User.fromFirestore(snapshot);
-    } else {
-      return null; // L'utilisateur n'existe pas
+    for (var current in snapshot.docs) {
+      UserFireStore curUser = UserFireStore.fromFirestore(current);
+      if (curUser.email == email) return curUser;
     }
+    return null;
   }
 
   Future<void> updateUser() async {
@@ -71,11 +84,15 @@ class User {
     await docUser.update(toMap());
   }
 
-  Future<void> deleteUser(String email) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc(email);
+  Future<void> deleteUser() async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
 
     // Supprimer le document de l'utilisateur
     await docUser.delete();
   }
 
+  static Future<bool> isAdmin(String email) async{
+    UserFireStore? user = await getUser(email);
+    return user == null ? false : user.role == admin;
+  }
 }

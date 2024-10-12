@@ -1,4 +1,6 @@
+import 'package:admin_app/guard/profile.dart';
 import 'package:admin_app/src/content.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,13 +26,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void signOutMethod(BuildContext context) {
-    try {
-      Navigator.pushReplacementNamed(context, '/');
-      //FirebaseAuth.instance.signOut();
-      //Navigator.of(context).pop();
-    } catch (e) {
-      debugPrint('Erreur lors de la déconnexion: $e');
-    }
-  }
 }

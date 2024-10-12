@@ -1,3 +1,5 @@
+import 'package:admin_app/src/store/user.dart';
+import 'package:admin_app/src/utilitaires/snack_bar.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ class AuthGate extends StatelessWidget {
             arguments: {'email': email},
           );
         }),
-        AuthStateChangeAction((context, state) {
+        AuthStateChangeAction((context, state) async {
           // Déclaration de la variable `user`
           final user = state is SignedIn
               ? state.user
@@ -47,7 +49,12 @@ class AuthGate extends StatelessWidget {
 
           // Vérification si l'utilisateur n'est pas null
           if (user != null) {
-            Navigator.pushReplacementNamed(context, '/home');
+            if(await UserFireStore.isAdmin(user.email!)) {
+              Navigator.pushReplacementNamed(context, '/home');
+            }
+            else{
+              showErrorSnackBar(context,"Vous devez être admin pour vous connecter");
+            }
           }
         }),
         mfaAction,
@@ -74,10 +81,11 @@ class AuthGate extends StatelessWidget {
           padding: const EdgeInsets.all(2),
           child: AspectRatio(
             aspectRatio: 10,
-            child: Image.asset('default/flutterfire_300x.png'),
+            child: Image.asset('default/flutterfire_logo.png'),
           ),
         );
       },
     );
   }
+
 }

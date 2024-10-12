@@ -3,40 +3,35 @@ import 'package:provider/provider.dart';
 
 import '../store/appstate.dart';
 
-class GridListPage extends StatelessWidget {
+class GridListPage<T> extends StatelessWidget {
   GridListPage({
-    super.key,
-    required this.isGridView, // Paramètre ajouté dans le constructeur
-  });
+    Key? key,
+    required this.isGridView,
+    required this.items,
+    required this.getItemString,
+    required this.isItemActive,
+    required this.onItemTap,
+    this.activeColor = const Color.fromARGB(255, 11, 151, 13),
+    this.inactiveColor = const Color.fromARGB(255, 91, 87, 87),
+  }) : super(key: key);
 
-  final bool isGridView; // Attribut rendu accessible depuis l'extérieur
-
-  final colorActive = Color.fromARGB(255, 11, 151, 13);
-  final colorInactive = Color.fromARGB(255, 91, 87, 87);
+  final bool isGridView;
+  final List<T> items;
+  final String Function(T item) getItemString;
+  final bool Function(T item) isItemActive;
+  final void Function(T item) onItemTap;
+  final Color activeColor;
+  final Color inactiveColor;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      /*appBar: AppBar( //Header de la page permettant d'afficher une grille ou une liste 
-        actions: [
-          IconButton(
-            icon: Icon(_isGridView ? Icons.list : Icons.grid_view),
-            onPressed: () {
-              setState(() {
-                _isGridView = !_isGridView;
-              });
-            },
-          )
-        ],
-      ),*/
       body: isGridView ? _buildGridView(context) : _buildListView(context),
     );
   }
 
   Widget _buildGridView(BuildContext context) {
-    var itemList = context.watch<MyAppState>().userList;
-
     return GridView.builder(
       padding: const EdgeInsets.all(8.0),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -44,20 +39,18 @@ class GridListPage extends StatelessWidget {
         crossAxisSpacing: 4.0,
         mainAxisSpacing: 4.0,
       ),
-      itemCount: itemList.length,
+      itemCount: items.length,
       itemBuilder: (context, index) {
-        final itemCur = itemList[index];
+        final itemCur = items[index];
         return SizedBox(
-          width: 100, // Largeur fixe pour chaque carte
-          height: 80, // Hauteur fixe pour chaque carte
+          width: 10, // Largeur fixe pour chaque carte
+          height: 8, // Hauteur fixe pour chaque carte
           child: InkWell(
             onTap: () {
-              context
-                  .read<MyAppState>()
-                  .activeInactiveUser(index, !itemCur.isActive);
+              onItemTap(itemCur);
             },
             child: Card(
-              color: itemCur.isActive ? colorActive : colorInactive,
+              color: isItemActive(itemCur) ? activeColor : inactiveColor,
               elevation: 4.0,
               child: Center(
                 child: Column(
@@ -71,7 +64,7 @@ class GridListPage extends StatelessWidget {
                       size: 50.0,
                     ),
                     Text(
-                      itemCur.toString(),
+                      getItemString(itemCur),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -85,22 +78,18 @@ class GridListPage extends StatelessWidget {
   }
 
   Widget _buildListView(BuildContext context) {
-    var itemList = context.watch<MyAppState>().userList;
-
     return ListView.builder(
       padding: const EdgeInsets.all(8.0),
-      itemCount: itemList.length,
+      itemCount: items.length,
       itemBuilder: (context, index) {
-        final itemCur = itemList[index];
+        final itemCur = items[index];
         return ListTile(
-          tileColor: itemCur.isActive ? colorActive : colorInactive,
-          title: Text(itemCur.toString()),
+          tileColor: isItemActive(itemCur) ? activeColor : inactiveColor,
+          title: Text(getItemString(itemCur)),
           trailing: Checkbox(
-            value: itemCur.isActive,
+            value: isItemActive(itemCur),
             onChanged: (bool? value) {
-              context
-                  .read<MyAppState>()
-                  .activeInactiveUser(index, value ?? true);
+              onItemTap(itemCur);
             },
           ),
         );
